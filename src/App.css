@@ -1,0 +1,260 @@
+@import url('https://fonts.googleapis.com/css2?family=Kanit:ital@1&display=swap');
+
+#root {
+  --charcoal: #242424;
+  font-family: Kanit, sans-serif;
+  font-weight: 100;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+
+::-webkit-scrollbar {
+  width: 12px;
+  height: 12px; 
+}
+
+
+::-webkit-scrollbar-track { 
+  border-radius: 5px;
+}
+
+
+::-webkit-scrollbar-thumb {
+  background: #333; 
+  border-radius: 5px;
+}
+
+
+::-webkit-scrollbar-thumb:hover {
+  background: goldenrod;
+}
+
+
+/* APP CSS */
+.app {
+  display: flex;
+  flex-direction: row;
+  background-color: var(--charcoal);
+  height: 100vh;
+  width: 100vw;
+}
+/* END APP CSS */
+
+/* NAVBAR CSS */
+.navbar {
+  display: flex;
+  flex-direction: column;
+  background-color: var(--charcoal);
+  width: 350px;
+  margin: 10px;
+  border-radius: 5px;
+  align-items: center;
+  text-align: center;
+  box-shadow: 0px 0px 10px 0px black;
+  justify-content: space-evenly;
+}
+
+.logo {
+  font-size: 100px;
+  margin: 10px;
+  color: white;
+  transition: .1s ease;
+}
+.logo:hover {
+  color: goldenrod;
+  font-size: 120px;
+}
+
+.links {
+  color: white;
+  text-decoration: none;
+  margin: 30px;
+  font-size: 25px;
+  transition: .1s ease;
+}
+.links:hover {
+  color: goldenrod;
+  font-size: 30px;
+}
+
+p {
+  color: white;
+  font-size: 30px;
+}
+/* NAVBAR CSS END */
+
+.page {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  width: 80%;
+  height: 100%;
+  color: white;
+  overflow: auto;
+}
+
+span {
+  color: goldenrod;
+}
+
+.home {
+  justify-content: space-around;
+  flex-direction: column;
+}
+
+.footer {
+  display: flex;
+  flex-direction: row;
+  width: 80%;
+  height: 200px;
+  justify-content: space-evenly;
+  align-items: center;
+  font-size: 30px;
+  cursor: pointer;
+}
+.footer > h1 {
+  transition: color .5s ease;
+  color: white;
+}
+.footer > h1:hover {
+  color: goldenrod;
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 700px;
+  height: 300px;
+  background-color: var(--charcoal);
+  border-radius: 5px;
+  margin: 10px;
+  box-shadow: 0px 0px 10px 0px black;
+  transition: .5s ease;
+  justify-content: space-around;
+}
+.card > h2 {
+  margin: 1em;
+}
+
+.card > button {
+  margin: 1em;
+  padding: 10px;
+  border: 1px solid white;
+  border-radius: 5px;
+  background-color: var(--charcoal);
+  color: white;
+  font-size: 20px;
+  transition: .5s ease;
+  cursor: pointer;
+  font-weight: bolder;
+  width: 200px;
+  height: 50px;
+  text-align: center;
+}
+.card > button:hover {
+  background-color: goldenrod;
+  color: var(--charcoal);
+}
+
+.searchbar {
+  display: flex;
+  flex-direction: row;
+  background-color: transparent;
+  height: 50px;
+  width: 300px;
+  justify-content: space-between;
+  box-shadow: 0px 0px 10px 0px black;
+}
+
+.searchbar > input {
+  background-color: transparent;
+  color: white;
+  border: none;
+  width: 250px;
+  height: 50px;
+  font-size: 30px;
+  padding: 10px;
+}
+
+.searchicon {
+  color: white;
+  font-size: 30px;
+  margin-top: 10px;
+  margin-right: 10px;
+  cursor: pointer;
+  transition: .5s ease;
+}
+.searchicon:hover {
+  color: goldenrod;
+}
+
+.creator {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+}
+
+.creator-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 700px;
+  height: 300px;
+  background-color: var(--charcoal);
+  border-radius: 5px;
+  margin: 10px;
+  box-shadow: 0px 0px 10px 0px black;
+  transition: .5s ease;
+  justify-content: space-around;
+}
+
+.card-ctn {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  width: 99%;
+  height: 50%;
+  color: white;
+  overflow: auto;
+}
+
+.creator-btn {
+  border: 1px solid white;
+  border-radius: 5px;
+  background-color: var(--charcoal);
+  color: white;
+  font-size: 20px;
+  transition: .5s ease;
+  cursor: pointer;
+  font-weight: bolder;
+  width: 200px;
+  height: 50px;
+  text-align: center;
+}
+.creator-btn:hover {
+  background-color: goldenrod;
+  color: var(--charcoal);
+}
+
+textarea {
+  width: 90%;
+  height: 200px;
+  font-size: 30px;
+  border-radius: 5px;
+  background-color: var(--charcoal);
+  color: white;
+  transition: .5s ease;
+  resize: none;
+  overflow: auto;
+  margin: 15px;
+  box-shadow: 0px 0px 15px 0px black;
+  text-align: center;
+  padding: 25px;
+}

@@ -1,0 +1,134 @@
+import React, { useState } from "react";
+import toast, { Toaster } from 'react-hot-toast';
+
+export const CardContext = React.createContext();
+
+const CardContextProvider = ({ children }) => {
+    let url = 'http://localhost:8000'
+    //STATE
+    const [javascriptCards, setJavascriptCards] = useState([]);
+    const [reactCards, setReactCards] = useState([]);
+    const [expressCards, setExpressCards] = useState([]);
+    const [showAnswer, setShowAnswer] = useState(false);
+    const [categoryID, setCategoryID] = useState('');
+    const [question, setQuestion] = useState('');
+    const [answer, setAnswer] = useState('')
+    const [userSearchedCards, setUserSearchedCards] = useState('')
+
+    //FUNCTIONS
+    //FUNCTION TO FETCH ALL CARDS===================================
+    const getCards = async (setElem, cardCategory) => {
+        try {
+            const res = await fetch(url+'/cards')
+            const data = await res.json()
+
+            let cards = [];
+            
+            data.forEach(card => {
+                if(card.category === cardCategory)
+                    cards.push(card)
+            })
+            setElem(cards)
+        } catch (error) {
+            console.log(error)
+        }
+    };
+
+    const getUserSearchedCards = async (value) => {
+        try {
+            const res = await fetch(url+`/cards/${value}`)
+            const data = await res.json()
+            setUserSearchedCards(data)
+            console.log(data)
+        } catch (error) {
+            res.status(500).json({message: error})
+            toast.error(error)
+        }
+    };
+
+    //FUNCTION TO TOGGLE SHOWANSWER================================
+    const toggleAnswer = (cardID, elem, setElem) => {
+        setElem(elem.map(card => 
+            card.id === cardID ? {...card, 
+                showAnswer: !card.showAnswer} : card
+        ));
+        console.log('8==D')
+    };
+
+    //FUNCTION TO CREATE A CARD=====================================
+    const createCard = async (question, answer, category) => {
+        try {
+        //set up card obj data
+        const cardData = {
+            question,
+            answer,
+            category
+        };
+        //set up post options
+        const options = {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(cardData)
+        };
+        //make post request
+        const res = await fetch(url+'/cards', options);
+        if(!res.ok) {
+            toast.error('Failed to create card, all fields are required');
+            <Toaster />
+            return;
+        }
+        await res.json();
+            toast.success('Card created');
+            <Toaster />
+        } catch (error) {
+            toast.error(error);
+            <Toaster />
+        }
+    };
+
+    //FUNCTIONS TO HANDLE INPUT VALUES FOR CREATING A CARD
+    const categoryIDChange = (event) => {
+        setCategoryID(event.target.value);
+    };
+
+    const questionChange = (event) => {
+        setQuestion(event.target.value);
+    };
+
+    const answerChange = (event) => {
+        setAnswer(event.target.value);
+    };
+    //FUNCTION TO SUBMIT CARD CREATION
+    const submit = () => {
+        createCard(question, answer, categoryID);
+    };
+
+    const userSearch = (e) => {
+        setUserSearchedCards(e.target.value)
+    }
+
+
+    return (
+        <CardContext.Provider value={{
+            getUserSearchedCards,
+            userSearch,
+            userSearchedCards, setUserSearchedCards,
+            submit,
+            categoryIDChange, categoryID,
+            questionChange, question,
+            answerChange, answer,
+            createCard,
+            toggleAnswer,
+            showAnswer, setShowAnswer,           
+            javascriptCards, setJavascriptCards,           
+            reactCards, setReactCards,           
+            expressCards, setExpressCards,            
+            getCards}}>
+            {children}
+        </CardContext.Provider>
+    )
+}
+
+export default CardContextProvider;
