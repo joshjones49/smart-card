@@ -3,12 +3,12 @@ import { CardContext } from "../../ContextAPI/ContextProvider"
 
 const SearchedCards = () => {
 
-    const { getUserSearchedCards, userSearchedCards } = useContext(CardContext)
+    const { } = useContext(CardContext)
 
 
   return (
     <div className='searched-cards' >
-      <h1>SEARCHED CARDS</h1>
+      <h2>SEARCHED CARDS</h2>
     </div>
   )
 }

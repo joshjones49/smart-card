@@ -13,7 +13,6 @@ const CardContextProvider = ({ children }) => {
     const [categoryID, setCategoryID] = useState('');
     const [question, setQuestion] = useState('');
     const [answer, setAnswer] = useState('')
-    const [userSearchedCards, setUserSearchedCards] = useState('')
 
     //FUNCTIONS
     //FUNCTION TO FETCH ALL CARDS===================================
@@ -112,9 +111,7 @@ const CardContextProvider = ({ children }) => {
 
     return (
         <CardContext.Provider value={{
-            getUserSearchedCards,
             userSearch,
-            userSearchedCards, setUserSearchedCards,
             submit,
             categoryIDChange, categoryID,
             questionChange, question,
