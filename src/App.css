@@ -115,14 +115,16 @@ span {
   height: 200px;
   justify-content: space-evenly;
   align-items: center;
-  font-size: 30px;
+  font-size: 60px;
   cursor: pointer;
 }
-.footer > h1 {
+.footer > a {
   transition: color .5s ease;
   color: white;
+  text-decoration: none;
+  font-weight: bold;
 }
-.footer > h1:hover {
+.footer > a:hover {
   color: goldenrod;
 }
 
@@ -257,4 +259,69 @@ textarea {
   box-shadow: 0px 0px 15px 0px black;
   text-align: center;
   padding: 25px;
+}
+
+.login-register {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 30%;
+  color: white;
+  overflow: auto;
+  border: 1px solid black;
+  box-shadow: 0px 0px 15px 0px black;
+  margin: 10px;
+}
+
+.form-input {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  margin: 10px;
+}
+
+.form-input > input {
+  width: 80%;
+  height: 50px;
+  font-size: 30px;
+  border-radius: 5px;
+  background-color: var(--charcoal);
+  color: white;
+  transition: .5s ease;
+  padding: 10px;
+  border: none;
+  margin: 10px;
+  box-shadow: 0px 0px 15px 0px black;
+  text-align: center;
+}
+
+.submit-btns {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-evenly;
+  width: 100%;
+  margin: 10px;
+}
+.submit-btns > button {
+  border: none;
+  border-radius: 5px;
+  background-color: var(--charcoal);
+  color: white;
+  font-size: 20px;
+  transition: .5s ease;
+  cursor: pointer;
+  font-weight: bolder;
+  width: 200px;
+  height: 50px;
+  text-align: center;
+  box-shadow: 0px 0px 15px 0px black;
+  font-weight: bold;
+}
+.submit-btns > button:hover {
+  background-color: goldenrod;
+  color: var(--charcoal);
 }

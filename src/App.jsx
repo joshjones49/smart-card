@@ -6,6 +6,7 @@ import ReactCtn from './components/React-Ctn'
 import ExpressCtn from './components/ExpressCtn'
 import CreatorCtn from './components/CreatorCtn'
 import SearchedCards from './components/SearchedCards'
+import LoginRegister from './components/LoginRegister'
 
 import Navbar from './components/Navbar'
 
@@ -21,6 +22,7 @@ function App() {
         <Route path='express-cards' element={<ExpressCtn/>} /> 
         <Route path='/creator' element={<CreatorCtn/>} />
         <Route path='/searched-cards' element={<SearchedCards/>} />
+        <Route path='/login-register' element={<LoginRegister/>} />
       </Routes>
     </div>
   )

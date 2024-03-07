@@ -33,18 +33,6 @@ const CardContextProvider = ({ children }) => {
         }
     };
 
-    const getUserSearchedCards = async (value) => {
-        try {
-            const res = await fetch(url+`/cards/${value}`)
-            const data = await res.json()
-            setUserSearchedCards(data)
-            console.log(data)
-        } catch (error) {
-            res.status(500).json({message: error})
-            toast.error(error)
-        }
-    };
-
     //FUNCTION TO TOGGLE SHOWANSWER================================
     const toggleAnswer = (cardID, elem, setElem) => {
         setElem(elem.map(card => 

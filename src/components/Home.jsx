@@ -1,4 +1,4 @@
-
+import { Link } from "react-router-dom"
 
 const Home = () => {
   return (
@@ -12,8 +12,7 @@ const Home = () => {
       </p>
 
       <div className="footer">
-        <h1>LOG-IN</h1>
-        <h1>REGISTER</h1>
+        <Link to='/login-register'>LOG-IN / REGISTER</Link>
       </div>
     </div>
   )
