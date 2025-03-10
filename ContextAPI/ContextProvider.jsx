@@ -12,7 +12,8 @@ const CardContextProvider = ({ children }) => {
     const [showAnswer, setShowAnswer] = useState(false);
     const [categoryID, setCategoryID] = useState('');
     const [question, setQuestion] = useState('');
-    const [answer, setAnswer] = useState('')
+    const [answer, setAnswer] = useState('');
+    const [userSearchedCards, setUserSearchedCards] = useState([]);
 
     //FUNCTIONS
     //FUNCTION TO FETCH ALL CARDS===================================
@@ -33,6 +34,15 @@ const CardContextProvider = ({ children }) => {
         }
     };
 
+    const getUserSearchedCards = async (search) => {
+        try {
+            const res = await fetch(url+`./cards/${search}`);
+            const data = await res.json();
+            console.log(data);
+        } catch (error) {
+            console.log(error)
+        }
+    }
     //FUNCTION TO TOGGLE SHOWANSWER================================
     const toggleAnswer = (cardID, elem, setElem) => {
         setElem(elem.map(card => 
@@ -92,14 +102,9 @@ const CardContextProvider = ({ children }) => {
         createCard(question, answer, categoryID);
     };
 
-    const userSearch = (e) => {
-        setUserSearchedCards(e.target.value)
-    }
-
-
     return (
         <CardContext.Provider value={{
-            userSearch,
+            getUserSearchedCards, userSearchedCards, setUserSearchedCards,
             submit,
             categoryIDChange, categoryID,
             questionChange, question,
