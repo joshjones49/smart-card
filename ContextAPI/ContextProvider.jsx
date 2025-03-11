@@ -13,6 +13,7 @@ const CardContextProvider = ({ children }) => {
     const [question, setQuestion] = useState('');
     const [answer, setAnswer] = useState('');
     const [userSearchedCards, setUserSearchedCards] = useState('');
+    const [cardData, setCardData] = useState([]);
 
     //FUNCTIONS
     //FUNCTION TO FETCH ALL CARDS===================================
@@ -38,6 +39,7 @@ const CardContextProvider = ({ children }) => {
         try {
             const res = await fetch(url+`/cards/${search}`);
             const data = await res.json();
+            setCardData(data)
             console.log(data);
         } catch (error) {
             console.log(error)
@@ -104,6 +106,7 @@ const CardContextProvider = ({ children }) => {
 
     return (
         <CardContext.Provider value={{
+            cardData, setCardData,
             getUserSearchedCards, userSearchedCards, setUserSearchedCards,
             submit,
             categoryIDChange, categoryID,
