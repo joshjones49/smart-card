@@ -39,7 +39,6 @@ const CreatorCtn = () => {
 
       </div>
       <button className='creator-btn' onClick={() => submit()} >SUBMIT</button>
-      <Toaster />
     </div>
   )
 }

@@ -9,7 +9,6 @@ const SearchedCards = () => {
         setCardData,
         getUserSearchedCards,
         userSearchedCards,
-        setUserSearchedCards,
         toggleAnswer
     } = useContext(CardContext)
 

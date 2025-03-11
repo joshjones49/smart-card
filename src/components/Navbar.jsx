@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { FaSearch } from "react-icons/fa";
 import { useContext, useEffect } from "react";
 import { CardContext } from "../../ContextAPI/ContextProvider";
+import toast, { Toaster } from "react-hot-toast"
 
 const Navbar = () => {
 
@@ -22,7 +23,7 @@ const Navbar = () => {
           <input id="search-input" type="text" placeholder="Search" onChange={(e) => setUserSearchedCards(e.target.value)}/>
           <Link to='/searched-cards' onClick={() => getUserSearchedCards(userSearchedCards)} >
             <FaSearch className="searchicon" />
-          </Link> 
+          </Link>
         </div>
 
         <Link to='/javascript-cards' className="links">

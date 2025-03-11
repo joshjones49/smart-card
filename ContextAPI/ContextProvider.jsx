@@ -36,6 +36,11 @@ const CardContextProvider = ({ children }) => {
     };
 
     const getUserSearchedCards = async (search) => {
+        if(search.length === 0) {
+            toast.error('Failed search: Field must have a search term');
+            return;
+        }
+
         try {
             const res = await fetch(url+`/cards/${search}`);
             const data = await res.json();

@@ -7,6 +7,7 @@ import ExpressCtn from './components/ExpressCtn'
 import CreatorCtn from './components/CreatorCtn'
 import SearchedCards from './components/SearchedCards'
 import LoginRegister from './components/LoginRegister'
+import toast, { Toaster } from "react-hot-toast"
 
 import Navbar from './components/Navbar'
 
@@ -24,6 +25,7 @@ function App() {
         <Route path='/searched-cards' element={<SearchedCards/>} />
         <Route path='/login-register' element={<LoginRegister/>} />
       </Routes>
+      <Toaster />
     </div>
   )
 }
