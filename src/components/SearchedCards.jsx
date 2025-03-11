@@ -4,11 +4,13 @@ import { CardContext } from "../../ContextAPI/ContextProvider"
 const SearchedCards = () => {
 
     const { 
-        getUserSearchedCards
+        getUserSearchedCards,
+        userSearchedCards,
+        setUserSearchedCards
     } = useContext(CardContext)
 
     useEffect(() => {
-      getUserSearchedCards()
+      getUserSearchedCards(userSearchedCards)
     }, [])
 
 

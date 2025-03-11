@@ -6,7 +6,11 @@ import { CardContext } from "../../ContextAPI/ContextProvider";
 
 const Navbar = () => {
 
-  const { } = useContext(CardContext);
+  const { 
+    getUserSearchedCards,
+    userSearchedCards,
+    setUserSearchedCards
+} = useContext(CardContext)
 
   return (
     <div className='navbar' >
@@ -15,10 +19,10 @@ const Navbar = () => {
         </Link>
 
         <div className="searchbar" >
-          <input id="search-input" type="text" placeholder="Search"/>
-          <Link to='/searched-cards' >
+          <input id="search-input" type="text" placeholder="Search" onChange={(e) => setUserSearchedCards(e.target.value)}/>
+          <Link to='/searched-cards' onClick={() => getUserSearchedCards(userSearchedCards)} >
             <FaSearch className="searchicon" />
-          </Link>  
+          </Link> 
         </div>
 
         <Link to='/javascript-cards' className="links">
@@ -38,6 +42,7 @@ const Navbar = () => {
         </Link>
     </div>
   )
+  
 }
 
 export default Navbar
