@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import toast, { Toaster } from 'react-hot-toast';
-
 export const CardContext = React.createContext();
 
 const CardContextProvider = ({ children }) => {
@@ -29,6 +28,7 @@ const CardContextProvider = ({ children }) => {
                     cards.push(card)
             })
             setElem(cards)
+            console.log(cards)
         } catch (error) {
             console.log(error)
         }
@@ -36,7 +36,7 @@ const CardContextProvider = ({ children }) => {
 
     const getUserSearchedCards = async (search) => {
         try {
-            const res = await fetch(url+`./cards/${search}`);
+            const res = await fetch(url+`/cards/${search}`);
             const data = await res.json();
             console.log(data);
         } catch (error) {

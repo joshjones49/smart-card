@@ -15,7 +15,7 @@ const Navbar = () => {
         </Link>
 
         <div className="searchbar" >
-          <input type="text" placeholder="Search"/>
+          <input id="search-input" type="text" placeholder="Search"/>
           <Link to='/searched-cards' >
             <FaSearch className="searchicon" />
           </Link>  

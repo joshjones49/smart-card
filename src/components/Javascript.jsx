@@ -17,14 +17,13 @@ const Javascript = () => {
 
 
   return (
-    <div className='page js'>
+<div className='page js'>
   {javascriptCards.map(card => (
     <div key={card.id} className='card'>
       <h2>{!card.showAnswer ? card.question : card.answer}{card.id > 40 ? <BsFillTrashFill /> : null}</h2>
       <button onClick={() => toggleAnswer(card.id, javascriptCards, setJavascriptCards)} >{!card.showAnswer ? 'ANSWER' : 'BACK'}</button>
     </div>
   ))}
-
 </div>
   )
 }
