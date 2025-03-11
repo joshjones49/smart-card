@@ -21,7 +21,7 @@ const Navbar = () => {
 
         <div className="searchbar" >
           <input id="search-input" type="text" placeholder="Search" onChange={(e) => setUserSearchedCards(e.target.value)}/>
-          <Link to='/searched-cards' onClick={() => getUserSearchedCards(userSearchedCards)} >
+          <Link to='/searched-cards' onClick={() => userSearchedCards.length === 0 ? toast.error('Error: Field must contain a search term') : getUserSearchedCards(userSearchedCards)} >
             <FaSearch className="searchicon" />
           </Link>
         </div>
