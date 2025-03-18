@@ -55,7 +55,6 @@ const CardContextProvider = ({ children }) => {
             card.id === cardID ? {...card, 
                 showAnswer: !card.showAnswer} : card
         ));
-        console.log('8==D')
     };
 
     //FUNCTION TO CREATE A CARD=====================================
