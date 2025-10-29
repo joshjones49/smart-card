@@ -20,7 +20,7 @@ const ExpressCtn = () => {
     <div className='page express' >
       {expressCards.map(card => (
       <div key={card.id} className='card'>
-      <h2>{!card.showAnswer ? card.question : card.answer}{card.id > 40 ? <BsFillTrashFill /> : null}</h2>
+      <h2>{!card.showAnswer ? card.question : card.answer}{card.id > 50 ? <BsFillTrashFill /> : null}</h2>
       <button onClick={() => toggleAnswer(card.id, expressCards, setExpressCards)} >{!card.showAnswer ? 'ANSWER' : 'BACK'}</button>
     </div>
   ))}

@@ -55,7 +55,7 @@
   border-radius: 5px;
   align-items: center;
   text-align: center;
-  box-shadow: 0px 0px 10px 0px black;
+  box-shadow: 0px 0px 2.5px 0px goldenrod;
   justify-content: space-evenly;
 }
 
@@ -63,11 +63,11 @@
   font-size: 100px;
   margin: 10px;
   color: white;
-  transition: .1s ease;
+  transition: .5s ease;
 }
 .logo:hover {
   color: goldenrod;
-  font-size: 120px;
+  transform: scale(1.4);
 }
 
 .links {
@@ -75,11 +75,11 @@
   text-decoration: none;
   margin: 30px;
   font-size: 25px;
-  transition: .1s ease;
+  transition: .5s ease;
 }
 .links:hover {
   color: goldenrod;
-  font-size: 30px;
+  transform: scale(1.4);
 }
 
 p {
@@ -137,7 +137,7 @@ span {
   background-color: var(--charcoal);
   border-radius: 5px;
   margin: 3%;
-  box-shadow: 0px 0px 10px 0px black;
+  box-shadow: 0px 0px 2.5px 0px goldenrod;
   transition: .5s ease;
   justify-content: space-around;
   font-size: 13px;
@@ -173,7 +173,7 @@ span {
   height: 50px;
   width: 300px;
   justify-content: space-between;
-  box-shadow: 0px 0px 10px 0px black;
+  box-shadow: 0px 0px 2.5px 0px goldenrod;
 }
 
 .searchbar > input {
@@ -214,7 +214,7 @@ span {
   background-color: var(--charcoal);
   border-radius: 5px;
   margin: 10px;
-  box-shadow: 0px 0px 10px 0px black;
+  box-shadow: 0px 0px 2.5px 0px goldenrod;
   transition: .5s ease;
   justify-content: space-around;
 }
@@ -258,7 +258,7 @@ textarea {
   resize: none;
   overflow: auto;
   margin: 15px;
-  box-shadow: 0px 0px 15px 0px black;
+  box-shadow: 0px 0px 2.5px 0px goldenrod;
   text-align: center;
   padding: 25px;
 }
@@ -270,9 +270,8 @@ textarea {
   justify-content: center;
   width: 30%;
   color: white;
-  overflow: auto;
   border: 1px solid black;
-  box-shadow: 0px 0px 15px 0px black;
+  box-shadow: 0px 0px 2.5px 0px goldenrod;
   margin: 10px;
 }
 
@@ -296,7 +295,7 @@ textarea {
   padding: 10px;
   border: none;
   margin: 10px;
-  box-shadow: 0px 0px 15px 0px black;
+  box-shadow: 0px 0px 2.5px 0px goldenrod;
   text-align: center;
 }
 
@@ -320,7 +319,7 @@ textarea {
   width: 200px;
   height: 50px;
   text-align: center;
-  box-shadow: 0px 0px 15px 0px black;
+  box-shadow: 0px 0px 2.5px 0px goldenrod;
   font-weight: bold;
 }
 .submit-btns > button:hover {
