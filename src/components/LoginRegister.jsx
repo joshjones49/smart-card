@@ -4,7 +4,7 @@ const LoginRegister = () => {
   return (
     <div className='login-register'>
         <div className='form-input'>
-            <h1>Name</h1>
+            <h1 className='name-plate' >Name <span>(Optional)</span></h1>
             <input type="text" placeholder="Name"/>
         </div>
 

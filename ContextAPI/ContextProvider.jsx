@@ -14,8 +14,12 @@ const CardContextProvider = ({ children }) => {
     const [answer, setAnswer] = useState('');
     const [userSearchedCards, setUserSearchedCards] = useState('');
     const [cardData, setCardData] = useState([]);
+    const [user, setUser] = useState(null); 
 
     //FUNCTIONS
+    //AUTHENTICATION & AUTHORIZATION
+
+
     //FUNCTION TO FETCH ALL CARDS===================================
     const getCards = async (setElem, cardCategory) => {
         try {
@@ -107,6 +111,26 @@ const CardContextProvider = ({ children }) => {
         createCard(question, answer, categoryID);
     };
 
+    //DELETE CARD
+    const deleteCard = async (cardID, setElem, cardCategory) => {
+        console.log(cardID)
+        try{
+            const res = await fetch(url + `/cards/delete/${cardID}`, {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json',
+                }
+            })
+            if(!res.ok) {
+                toast.error('Failed to delete')
+                return
+            }
+            getCards(setElem, cardCategory)
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
     return (
         <CardContext.Provider value={{
             cardData, setCardData,
@@ -121,7 +145,7 @@ const CardContextProvider = ({ children }) => {
             javascriptCards, setJavascriptCards,           
             reactCards, setReactCards,           
             expressCards, setExpressCards,            
-            getCards}}>
+            getCards, deleteCard}}>
             {children}
         </CardContext.Provider>
     )

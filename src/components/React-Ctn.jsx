@@ -8,18 +8,19 @@ const ReactCtn = () => {
           getCards,
           setReactCards,
           reactCards,
-          toggleAnswer 
+          toggleAnswer,
+          deleteCard 
         } = useContext(CardContext)
 
     useEffect(() => {
-      getCards(setReactCards, 'React')
+      getCards(setReactCards, 'react')
     }, [])
 
   return (
     <div className='page react' >
         {reactCards.map(card => (
           <div key={card.id} className='card'>
-          <h2>{!card.showAnswer ? card.question : card.answer}{card.id > 40 ? <BsFillTrashFill /> : null}</h2>
+          <h2>{!card.showAnswer ? card.question : card.answer}{card.id > 40 ? <BsFillTrashFill className='trashcan' onClick={() => deleteCard(card.id, setReactCards, 'react')} /> : null}</h2>
           <button onClick={() => toggleAnswer(card.id, reactCards, setReactCards)} >{!card.showAnswer ? 'ANSWER' : 'BACK'}</button>
     </div>
   ))}

@@ -12,7 +12,7 @@ const Javascript = () => {
         } = useContext(CardContext)
 
   useEffect(() => {
-    getCards(setJavascriptCards, 'Javascript')
+    getCards(setJavascriptCards, 'javascript')
   }, [])
 
 
@@ -20,7 +20,7 @@ const Javascript = () => {
 <div className='page js'>
   {javascriptCards.map(card => (
     <div key={card.id} className='card'>
-      <h2>{!card.showAnswer ? card.question : card.answer}{card.id > 40 ? <BsFillTrashFill /> : null}</h2>
+      <h2>{!card.showAnswer ? card.question : card.answer}{card.id > 40 ? <BsFillTrashFill className='trashcan' onClick={() => deleteCard(card.id, setJavascriptCards, 'javascript')} /> : null}</h2>
       <button onClick={() => toggleAnswer(card.id, javascriptCards, setJavascriptCards)} >{!card.showAnswer ? 'ANSWER' : 'BACK'}</button>
     </div>
   ))}
