@@ -14,7 +14,8 @@ const CardContextProvider = ({ children }) => {
     const [answer, setAnswer] = useState('');
     const [userSearchedCards, setUserSearchedCards] = useState('');
     const [cardData, setCardData] = useState([]);
-    const [user, setUser] = useState(null); 
+    const [user, setUser] = useState(null);
+    const [displayValue, setDisplayValue] = useState(false); 
 
     //FUNCTIONS
     //AUTHENTICATION & AUTHORIZATION
@@ -131,6 +132,46 @@ const CardContextProvider = ({ children }) => {
         }
     }
 
+    //EDIT CARD
+    const editCard = async (cardID, updatedQuestion, updatedAnswer, cardCategory, setElem) => {
+        try {
+            const cardData = {
+                question: updatedQuestion,
+                answer: updatedAnswer,
+                category: cardCategory
+            };
+
+            const res = await fetch(url + `/cards/${cardID}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(cardData)
+            });
+
+            if (!res.ok) {
+                toast.error('Failed to update card');
+                return;
+            }
+
+            toast.success('Card updated successfully');
+
+            // Refresh the cards after editing
+            getCards(setElem, cardCategory);
+
+        } catch (error) {
+            console.log(error);
+            toast.error('Error updating card');
+        }
+    }
+
+    //DISPLAYS THE EDIT CARD PAGE
+    const displayEditPage = (cardID) => {
+        console.log(cardID)
+        setDisplayValue(true);
+        console.log(displayValue)
+    }
+
     return (
         <CardContext.Provider value={{
             cardData, setCardData,
@@ -139,13 +180,13 @@ const CardContextProvider = ({ children }) => {
             categoryIDChange, categoryID,
             questionChange, question,
             answerChange, answer,
-            createCard,
+            createCard, displayEditPage,
             toggleAnswer,
             showAnswer, setShowAnswer,           
             javascriptCards, setJavascriptCards,           
             reactCards, setReactCards,           
             expressCards, setExpressCards,            
-            getCards, deleteCard}}>
+            getCards, deleteCard, editCard}}>
             {children}
         </CardContext.Provider>
     )

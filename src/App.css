@@ -336,11 +336,24 @@ textarea {
   margin-left:10%;
 }
 
-.trashcan{
+.edit-icon{
   cursor: pointer;
-  margin-left: 15px;
   transition: .2s ease-in-out;
+  font-size: 1.4rem;
 }
-.trashcan:hover{
+.edit-icon:hover{
   color: goldenrod;
+}
+
+.edit-box{
+  display: flex;
+  align-items: center;
+  width: 93%;
+  margin-top: -30px;
+}
+
+.inner-edit-box{
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
 }
