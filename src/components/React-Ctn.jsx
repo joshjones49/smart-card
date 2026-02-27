@@ -10,7 +10,7 @@ const ReactCtn = () => {
     setReactCards,
     reactCards,
     toggleAnswer,
-    deleteCard, displayEditPage 
+    deleteCard, displayEditPage, canManageCard 
   } = useContext(CardContext)
 
     useEffect(() => {
@@ -21,7 +21,7 @@ const ReactCtn = () => {
     <div className='page react' >
         {reactCards.map(card => (
           <div key={card.id} className='card'>
-            {card.id > 45 ?
+            {canManageCard(card) ?
               <div className='edit-box' >
                 <div className="inner-edit-box">
                   <HiPencilAlt className="edit-icon" onClick={() => displayEditPage(card.id)}/>

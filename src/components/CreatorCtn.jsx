@@ -8,8 +8,20 @@ const CreatorCtn = () => {
             categoryIDChange, categoryID,
             questionChange, question,
             answerChange, answer,
-            submit
+            submit,
+            canCreate
          } = useContext(CardContext)
+
+  if (!canCreate) {
+    return (
+      <div className='page creator'>
+        <div className='creator-card'>
+          <h1>Access denied</h1>
+          <p>Please log in as a user or admin to create cards.</p>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className='page creator' >

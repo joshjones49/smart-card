@@ -10,7 +10,7 @@ const SearchedCards = () => {
     setCardData,
     getUserSearchedCards,
     userSearchedCards,
-    toggleAnswer, deleteCard, editCard
+    toggleAnswer, deleteCard, canManageCard
   } = useContext(CardContext)
 
     useEffect(() => {
@@ -22,9 +22,9 @@ const SearchedCards = () => {
     <div className='page searched-cards' >
         {cardData.map(card => (
       <div key={card.id} className='card'>
-            <h2>{card.showAnswer ? card.answer : card.question}{card.id > 45 ?
+            <h2>{card.showAnswer ? card.answer : card.question}{canManageCard(card) ?
               <div className="edit-box">
-                <BsFillTrashFill className='trashcan' onClick={() => deleteCard(card.id, getUserSearchedCards, 'react')} />
+                <BsFillTrashFill className='trashcan' onClick={() => deleteCard(card.id)} />
                 <HiPencilAlt className="edit-icon" />
               </div>: null}
             </h2>

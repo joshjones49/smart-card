@@ -1,9 +1,12 @@
-import React, { useState } from "react";
-import toast, { Toaster } from 'react-hot-toast';
+import React, { useEffect, useState } from "react";
+import toast from 'react-hot-toast';
 export const CardContext = React.createContext();
 
 const CardContextProvider = ({ children }) => {
-    let url = 'http://localhost:8000'
+    const url = 'http://localhost:8000';
+    const TOKEN_KEY = 'smartcard_access_token';
+    const USER_KEY = 'smartcard_user';
+
     //STATE
     const [javascriptCards, setJavascriptCards] = useState([]);
     const [reactCards, setReactCards] = useState([]);
@@ -15,10 +18,158 @@ const CardContextProvider = ({ children }) => {
     const [userSearchedCards, setUserSearchedCards] = useState('');
     const [cardData, setCardData] = useState([]);
     const [user, setUser] = useState(null);
+    const [accessToken, setAccessToken] = useState('');
+    const [myCards, setMyCards] = useState([]);
     const [displayValue, setDisplayValue] = useState(false); 
 
-    //FUNCTIONS
+    useEffect(() => {
+        const savedToken = localStorage.getItem(TOKEN_KEY);
+        const savedUser = localStorage.getItem(USER_KEY);
+
+        if (savedToken && savedUser) {
+            setAccessToken(savedToken);
+            setUser(JSON.parse(savedUser));
+        }
+    }, []);
+
+    const saveSession = (sessionUser, token) => {
+        setUser(sessionUser);
+        setAccessToken(token);
+        localStorage.setItem(TOKEN_KEY, token);
+        localStorage.setItem(USER_KEY, JSON.stringify(sessionUser));
+    };
+
+    const clearSession = () => {
+        setUser(null);
+        setAccessToken('');
+        setMyCards([]);
+        localStorage.removeItem(TOKEN_KEY);
+        localStorage.removeItem(USER_KEY);
+    };
+
+    const getAuthHeaders = () => {
+        if (!accessToken) return {};
+        return { Authorization: `Bearer ${accessToken}` };
+    };
+
+    const isGuest = !user;
+    const isAdmin = user?.access === 'admin';
+    const canCreate = user?.access === 'user' || user?.access === 'admin';
+    const isLoggedIn = Boolean(user && accessToken);
+
+    const canManageCard = (card) => {
+        if (!user) return false;
+        if (user.access === 'admin') return true;
+        return card.owner_id === user.id;
+    };
+
     //AUTHENTICATION & AUTHORIZATION
+    const register = async ({ name, username, password }) => {
+        try {
+            const registerRes = await fetch(url + '/users/register', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ name, username, password })
+            });
+
+            if (!registerRes.ok) {
+                const message = await registerRes.text();
+                toast.error(message || 'Register failed');
+                return false;
+            }
+
+            toast.success('Registered successfully');
+            return await login({ username, password });
+        } catch (error) {
+            toast.error('Register failed');
+            return false;
+        }
+    };
+
+    const login = async ({ username, password }) => {
+        try {
+            const loginRes = await fetch(url + '/users/login', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ username, password })
+            });
+
+            const data = await loginRes.json().catch(() => null);
+
+            if (!loginRes.ok || !data?.accessToken) {
+                toast.error(data?.message || data?.error || 'Login failed');
+                return false;
+            }
+
+            saveSession(
+                {
+                    id: data.id,
+                    name: data.name,
+                    username: data.username,
+                    access: data.access
+                },
+                data.accessToken
+            );
+            toast.success('Logged in');
+            return true;
+        } catch (error) {
+            toast.error('Login failed');
+            return false;
+        }
+    };
+
+    const logout = () => {
+        clearSession();
+        toast.success('Logged out');
+    };
+
+    const fetchMe = async () => {
+        if (!accessToken) return null;
+        try {
+            const res = await fetch(url + '/users/me', {
+                headers: {
+                    ...getAuthHeaders()
+                }
+            });
+
+            if (!res.ok) {
+                clearSession();
+                return null;
+            }
+
+            const data = await res.json();
+            setUser(data);
+            localStorage.setItem(USER_KEY, JSON.stringify(data));
+            return data;
+        } catch (error) {
+            clearSession();
+            return null;
+        }
+    };
+
+    const fetchMyCards = async () => {
+        if (!accessToken) return [];
+        try {
+            const res = await fetch(url + '/users/me/cards', {
+                headers: {
+                    ...getAuthHeaders()
+                }
+            });
+
+            if (!res.ok) {
+                return [];
+            }
+            const data = await res.json();
+            setMyCards(data);
+            return data;
+        } catch (error) {
+            return [];
+        }
+    };
 
 
     //FUNCTION TO FETCH ALL CARDS===================================
@@ -64,6 +215,11 @@ const CardContextProvider = ({ children }) => {
 
     //FUNCTION TO CREATE A CARD=====================================
     const createCard = async (question, answer, category) => {
+        if (!canCreate) {
+            toast.error('You must be logged in as user/admin to create cards');
+            return;
+        }
+
         try {
         //set up card obj data
         const cardData = {
@@ -75,7 +231,8 @@ const CardContextProvider = ({ children }) => {
         const options = {
             method: 'POST',
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                ...getAuthHeaders()
             },
             body: JSON.stringify(cardData)
         };
@@ -83,15 +240,12 @@ const CardContextProvider = ({ children }) => {
         const res = await fetch(url+'/cards', options);
         if(!res.ok) {
             toast.error('Failed to create card, all fields are required');
-            <Toaster />
             return;
         }
         await res.json();
             toast.success('Card created');
-            <Toaster />
         } catch (error) {
             toast.error(error);
-            <Toaster />
         }
     };
 
@@ -114,19 +268,25 @@ const CardContextProvider = ({ children }) => {
 
     //DELETE CARD
     const deleteCard = async (cardID, setElem, cardCategory) => {
-        console.log(cardID)
         try{
             const res = await fetch(url + `/cards/delete/${cardID}`, {
                 method: 'DELETE',
                 headers: {
                     'Content-Type': 'application/json',
+                    ...getAuthHeaders()
                 }
             })
             if(!res.ok) {
-                toast.error('Failed to delete')
+                const data = await res.json().catch(() => ({}));
+                toast.error(data.error || 'Failed to delete');
                 return
             }
-            getCards(setElem, cardCategory)
+            if (typeof setElem === 'function' && cardCategory) {
+                getCards(setElem, cardCategory);
+            } else if (userSearchedCards.trim().length > 0) {
+                getUserSearchedCards(userSearchedCards);
+            }
+            fetchMyCards();
         } catch (error) {
             console.log(error)
         }
@@ -141,10 +301,11 @@ const CardContextProvider = ({ children }) => {
                 category: cardCategory
             };
 
-            const res = await fetch(url + `/cards/${cardID}`, {
+            const res = await fetch(url + `/cards/edit/${cardID}`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',
+                    ...getAuthHeaders()
                 },
                 body: JSON.stringify(cardData)
             });
@@ -158,6 +319,7 @@ const CardContextProvider = ({ children }) => {
 
             // Refresh the cards after editing
             getCards(setElem, cardCategory);
+            fetchMyCards();
 
         } catch (error) {
             console.log(error);
@@ -167,13 +329,25 @@ const CardContextProvider = ({ children }) => {
 
     //DISPLAYS THE EDIT CARD PAGE
     const displayEditPage = (cardID) => {
-        console.log(cardID)
         setDisplayValue(true);
-        console.log(displayValue)
     }
 
     return (
         <CardContext.Provider value={{
+            // auth
+            user,
+            accessToken,
+            isGuest,
+            isAdmin,
+            canCreate,
+            isLoggedIn,
+            canManageCard,
+            login,
+            register,
+            logout,
+            fetchMe,
+            fetchMyCards,
+            myCards,
             cardData, setCardData,
             getUserSearchedCards, userSearchedCards, setUserSearchedCards,
             submit,

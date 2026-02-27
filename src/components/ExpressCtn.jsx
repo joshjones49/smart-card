@@ -10,7 +10,7 @@ const ExpressCtn = () => {
     getCards,
     setExpressCards,
     expressCards,
-    toggleAnswer, deleteCard, displayEditPage
+    toggleAnswer, deleteCard, displayEditPage, canManageCard
   } = useContext(CardContext)
 
     useEffect(() => {
@@ -21,10 +21,10 @@ const ExpressCtn = () => {
     <div className='page express' >
       {expressCards.map(card => (
       <div key={card.id} className='card'>
-        {card.id > 45 ?
+        {canManageCard(card) ?
           <div className='edit-box' >
             <div className="inner-edit-box">
-              <HiPencilAlt className="edit-icon" />
+              <HiPencilAlt className="edit-icon" onClick={() => displayEditPage(card.id)} />
               <BsFillTrashFill className='edit-icon' onClick={() => deleteCard(card.id, setExpressCards, 'express')} />
             </div>
           </div>

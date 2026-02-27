@@ -1,17 +1,31 @@
 import { TbCardsFilled } from "react-icons/tb";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { FaSearch } from "react-icons/fa";
-import { useContext, useEffect } from "react";
+import { useContext } from "react";
 import { CardContext } from "../../ContextAPI/ContextProvider";
-import toast, { Toaster } from "react-hot-toast"
+import toast from "react-hot-toast"
 
 const Navbar = () => {
+  const navigate = useNavigate();
 
   const { 
     getUserSearchedCards,
     userSearchedCards,
-    setUserSearchedCards
+    setUserSearchedCards,
+    canCreate,
+    isLoggedIn,
+    logout
 } = useContext(CardContext)
+
+  const handleSearch = () => {
+    if (userSearchedCards.trim().length === 0) {
+      toast.error('Error: Field must contain a search term');
+      return;
+    }
+
+    getUserSearchedCards(userSearchedCards.trim());
+    navigate('/searched-cards');
+  };
 
   return (
     <div className='navbar' >
@@ -20,10 +34,15 @@ const Navbar = () => {
         </Link>
 
         <div className="searchbar" >
-          <input id="search-input" type="text" placeholder="Search" onChange={(e) => setUserSearchedCards(e.target.value)}/>
-          <Link to='/searched-cards' onClick={() => userSearchedCards.length === 0 ? toast.error('Error: Field must contain a search term') : getUserSearchedCards(userSearchedCards)} >
-            <FaSearch className="searchicon" />
-          </Link>
+          <input
+            id="search-input"
+            type="text"
+            placeholder="Search"
+            value={userSearchedCards}
+            onChange={(e) => setUserSearchedCards(e.target.value)}
+            onKeyDown={(e) => e.key === 'Enter' && handleSearch()}
+          />
+          <FaSearch className="searchicon" onClick={handleSearch} />
         </div>
 
         <Link to='/javascript-cards' className="links">
@@ -38,9 +57,22 @@ const Navbar = () => {
           <h1>Express</h1>
         </Link>
 
-        <Link to='/creator' className="links" >
-          <h1>Create</h1>
-        </Link>
+        {canCreate ? (
+          <Link to='/creator' className="links" >
+            <h1>Create</h1>
+          </Link>
+        ) : null}
+
+        {isLoggedIn ? (
+          <>
+            <Link to='/profile' className="links" >
+              <h1>Profile</h1>
+            </Link>
+            <button className="links logout-link" onClick={logout}>
+              LOGOUT
+            </button>
+          </>
+        ) : null}
     </div>
   )
   

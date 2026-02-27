@@ -1,16 +1,17 @@
 # SmartCard (Frontend)
 
-SmartCard is a React flashcard UI for studying JavaScript, React, and Express topics. It provides category browsing, card creation, search, card flipping, and delete/edit actions through a local backend API.
+SmartCard is a React flashcard UI for studying JavaScript, React, and Express topics. It supports category browsing, search, card flipping, authentication, role-based UI permissions, and profile views backed by a local API.
 
 ## Project Description
 
 This frontend is responsible for:
 
 - rendering study cards by category
-- handling card creation form input and submission
 - searching cards by text
 - flipping cards to reveal answers
-- triggering delete and edit API actions
+- handling login/register/logout flows
+- conditionally showing UI actions by role
+- showing user profile details and user-owned cards by category
 
 The app is designed for local full-stack development with `smart-card-be`.
 
@@ -32,6 +33,7 @@ The app is designed for local full-stack development with `smart-card-be`.
 - Node.js (LTS recommended)
 - npm
 - Backend API running from `smart-card-be` on `http://localhost:8000`
+- Backend migration applied so role/ownership columns exist
 
 ### Install
 
@@ -61,12 +63,26 @@ Frontend runs with Vite (typically at `http://localhost:5173`).
 - Main frontend calls include:
   - `GET /cards` (load all cards)
   - `GET /cards/:search` (search cards)
-  - `POST /cards` (create card)
-  - `DELETE /cards/delete/:id` (delete card)
-- User/auth screens are scaffolded in the frontend and align with backend `/users` routes that are being built out.
+  - `POST /cards` (create card, auth required)
+  - `DELETE /cards/delete/:id` (delete card, owner/admin only)
+  - `PUT /cards/edit/:id` (edit card, owner/admin only)
+- User/auth calls include:
+  - `POST /users/register`
+  - `POST /users/login`
+  - `GET /users/me` (auth required)
+  - `GET /users/me/cards` (auth required)
+
+## Role-Based Behavior (UI)
+
+- `guest` (not logged in): can browse and search cards
+- `user` (logged in): guest permissions + can create cards + can edit/delete own cards
+- `admin` (logged in): full access to card mutations
+- Navbar behavior:
+  - `Create` link appears only for `user`/`admin`
+  - `Go to Profile` appears only for logged-in users
 
 ## Current Status
 
 - Intended to run locally with the backend.
-- Core create/read/search/delete flows are active.
-- Auth and full edit flow integration are in progress.
+- Auth-aware UI and role-based navbar/profile are active.
+- Protected card mutations require valid backend auth and migrated DB schema.

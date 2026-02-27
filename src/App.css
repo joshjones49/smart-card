@@ -1,9 +1,16 @@
 @import url('https://fonts.googleapis.com/css2?family=Kanit:ital@1&display=swap');
 
 #root {
-  --charcoal: #242424;
+  --charcoal: #0b1f3b;
+  --charcoal-soft: #13315c;
+  --gold: #ff8c2a;
+  --gold-soft: #ffc08a;
+  --text: #ffffff;
   font-family: Kanit, sans-serif;
   font-weight: 100;
+  min-height: 100vh;
+  background: radial-gradient(circle at top, #1d3f72 0%, #081629 65%);
+  color: var(--text);
 }
 
 * {
@@ -25,13 +32,13 @@
 
 
 ::-webkit-scrollbar-thumb {
-  background: #333; 
+  background: #274d86;
   border-radius: 5px;
 }
 
 
 ::-webkit-scrollbar-thumb:hover {
-  background: goldenrod;
+  background: var(--gold);
 }
 
 
@@ -39,51 +46,87 @@
 .app {
   display: flex;
   flex-direction: row;
-  background-color: var(--charcoal);
+  background: transparent;
   height: 100vh;
-  width: 100vw;
+  width: 100%;
+  padding: 12px;
+  gap: 12px;
+  overflow: hidden;
 }
 /* END APP CSS */
+
+.route-shell {
+  flex: 1;
+  display: flex;
+  min-width: 0;
+  border-radius: 14px;
+  background: linear-gradient(165deg, #0d2343 0%, #081629 100%);
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.35), 0 12px 30px rgba(0, 0, 0, 0.35);
+  animation: routeEnter 320ms ease;
+  overflow: hidden;
+}
+
+@keyframes routeEnter {
+  from {
+    opacity: 0;
+    transform: translateY(10px) scale(0.995);
+    filter: blur(2px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    filter: blur(0);
+  }
+}
 
 /* NAVBAR CSS */
 .navbar {
   display: flex;
   flex-direction: column;
-  background-color: var(--charcoal);
-  width: 350px;
-  margin: 10px;
-  border-radius: 5px;
+  background: linear-gradient(180deg, #15325d 0%, #0b1f3b 100%);
+  width: 320px;
+  min-width: 320px;
+  max-width: 320px;
+  flex: 0 0 320px;
+  margin: 0;
+  border-radius: 14px;
   align-items: center;
   text-align: center;
-  box-shadow: 0px 0px 2.5px 0px goldenrod;
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.35), 0 10px 30px rgba(0, 0, 0, 0.35);
   justify-content: space-evenly;
+  height: 100%;
+  overflow: hidden;
 }
 
 .logo {
   font-size: 100px;
   margin: 10px;
-  color: white;
-  transition: .5s ease;
+  color: var(--text);
+  transition: color .25s ease;
 }
 .logo:hover {
-  color: goldenrod;
-  transform: scale(1.4);
+  color: var(--gold);
 }
 
 .links {
-  color: white;
+  color: var(--text);
   text-decoration: none;
   margin: 30px;
   font-size: 25px;
-  transition: .5s ease;
+  transition: color .25s ease;
 }
 .links:hover {
-  color: goldenrod;
-  transform: scale(1.4);
+  color: var(--gold);
+}
+
+.logout-link {
+  border: none;
+  background: transparent;
+  cursor: pointer;
 }
 
 p {
-  color: white;
+  color: var(--text);
   font-size: 30px;
 }
 /* NAVBAR CSS END */
@@ -93,14 +136,16 @@ p {
   flex-wrap: wrap;
   align-items: center;
   justify-content: center;
-  width: 80%;
+  width: 90%;
   height: 100%;
-  color: white;
+  color: var(--text);
   overflow: auto;
+  padding: 24px;
+  margin: 0 auto;
 }
 
 span {
-  color: goldenrod;
+  color: var(--gold);
 }
 
 .home {
@@ -120,51 +165,58 @@ span {
 }
 .footer > a {
   transition: color .5s ease;
-  color: white;
+  color: var(--text);
   text-decoration: none;
   font-weight: bold;
 }
 .footer > a:hover {
-  color: goldenrod;
+  color: var(--gold);
 }
 
 .card {
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 400px;
-  height: 400px;
-  background-color: var(--charcoal);
-  border-radius: 5px;
-  margin: 3%;
-  box-shadow: 0px 0px 2.5px 0px goldenrod;
-  transition: .5s ease;
+  width: min(35%, 350px);
+  min-width: 300px;
+  height: 320px;
+  background: linear-gradient(155deg, #163761 0%, #0b1f3b 100%);
+  border-radius: 12px;
+  margin: calc(12px + 2%);
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.28), 0 10px 22px rgba(0, 0, 0, 0.35);
+  transition: transform .25s ease, box-shadow .25s ease;
   justify-content: space-around;
   font-size: 13px;
 }
+.card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.55), 0 14px 28px rgba(0, 0, 0, 0.45);
+}
 .card > h2 {
   margin: 1em;
+  font-size: 1.1rem;
 }
 
 .card > button {
   margin: 1em;
   padding: 10px;
   border: none;
-  border-radius: 5px;
-  background-color: var(--charcoal);
-  color: white;
+  border-radius: 8px;
+  background-color: var(--charcoal-soft);
+  color: var(--text);
   font-size: 20px;
-  transition: .5s ease;
+  transition: background-color .2s ease, color .2s ease, transform .2s ease;
   cursor: pointer;
   font-weight: bolder;
   width: 200px;
   height: 50px;
   text-align: center;
-  box-shadow: 0px 0px 2.5px 0px goldenrod;
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.45);
 }
 .card > button:hover {
-  background-color: goldenrod;
+  background-color: var(--gold);
   color: var(--charcoal);
+  transform: translateY(-1px);
 }
 
 .searchbar {
@@ -174,12 +226,13 @@ span {
   height: 50px;
   width: 300px;
   justify-content: space-between;
-  box-shadow: 0px 0px 2.5px 0px goldenrod;
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.45);
+  border-radius: 8px;
 }
 
 .searchbar > input {
   background-color: transparent;
-  color: white;
+  color: var(--text);
   border: none;
   width: 250px;
   height: 50px;
@@ -189,7 +242,7 @@ span {
 }
 
 .searchicon {
-  color: white;
+  color: var(--text);
   font-size: 30px;
   margin-top: 10px;
   margin-right: 10px;
@@ -197,7 +250,7 @@ span {
   transition: .5s ease;
 }
 .searchicon:hover {
-  color: goldenrod;
+  color: var(--gold);
 }
 
 .creator {
@@ -212,12 +265,16 @@ span {
   align-items: center;
   width: 700px;
   height: 300px;
-  background-color: var(--charcoal);
-  border-radius: 5px;
+  background: linear-gradient(155deg, #163761 0%, #0b1f3b 100%);
+  border-radius: 12px;
   margin: 10px;
-  box-shadow: 0px 0px 2.5px 0px goldenrod;
-  transition: .5s ease;
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.28), 0 10px 22px rgba(0, 0, 0, 0.35);
+  transition: transform .25s ease, box-shadow .25s ease;
   justify-content: space-around;
+}
+.creator-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.55), 0 14px 28px rgba(0, 0, 0, 0.45);
 }
 
 .card-ctn {
@@ -226,42 +283,43 @@ span {
   align-items: center;
   width: 99%;
   height: 50%;
-  color: white;
+  color: var(--text);
   overflow: auto;
 }
 
 .creator-btn {
   border: none;
-  border-radius: 5px;
-  background-color: var(--charcoal);
-  color: white;
+  border-radius: 8px;
+  background-color: var(--charcoal-soft);
+  color: var(--text);
   font-size: 20px;
-  transition: .5s ease;
+  transition: background-color .2s ease, color .2s ease, transform .2s ease;
   cursor: pointer;
   font-weight: bolder;
   width: 200px;
   height: 50px;
   text-align: center;
-  box-shadow: 0px 0px 2.5px 0px goldenrod;
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.45);
 }
 .creator-btn:hover {
-  background-color: goldenrod;
+  background-color: var(--gold);
   color: var(--charcoal);
+  transform: translateY(-1px);
 }
 
 textarea {
   width: 90%;
   height: 200px;
   font-size: 30px;
-  border-radius: 5px;
-  background-color: var(--charcoal);
-  color: white;
-  transition: .5s ease;
+  border-radius: 10px;
+  background-color: #102b4f;
+  color: var(--text);
+  transition: box-shadow .2s ease, border-color .2s ease;
   resize: none;
   overflow: auto;
   margin: 15px;
   border: none;
-  box-shadow: 0px 0px 2.5px 0px goldenrod;
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.35);
   text-align: center;
   padding: 25px;
 }
@@ -271,10 +329,13 @@ textarea {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  width: 40%;
-  color: white;
-  box-shadow: 0px 0px 2.5px 0px goldenrod;
-  margin: 10px;
+  width: 65%;
+  height: 70%;
+  color: var(--text);
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.35), 0 10px 30px rgba(0, 0, 0, 0.35);
+  margin: auto;
+  border-radius: 12px;
+  background: linear-gradient(155deg, #163761 0%, #0b1f3b 100%);
 }
 
 .form-input {
@@ -282,26 +343,55 @@ textarea {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  width: 100%;
+  width: 60%;
   margin: 10px;
 }
 .form-input>h1>span{
   font-size: 1rem;
 }
 
-.form-input > input {
+.form-input > input,
+.password-input-wrap > input {
   width: 80%;
   height: 50px;
   font-size: 30px;
-  border-radius: 5px;
-  background-color: var(--charcoal);
-  color: white;
-  transition: .5s ease;
+  border-radius: 8px;
+  background-color: #102b4f;
+  color: var(--text);
+  transition: box-shadow .2s ease, border-color .2s ease;
   padding: 10px;
   border: none;
   margin: 10px;
-  box-shadow: 0px 0px 2.5px 0px goldenrod;
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.45);
   text-align: center;
+}
+
+.password-input-wrap {
+  position: relative;
+  width: 80%;
+}
+
+.password-input-wrap > .password-input {
+  width: 100%;
+  padding-left: 74px;
+  padding-right: 74px;
+}
+
+.toggle-password-btn {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  border: none;
+  background: transparent;
+  color: var(--gold);
+  cursor: pointer;
+  font-size: 0.95rem;
+  font-weight: 600;
+}
+
+.toggle-password-btn:hover {
+  color: var(--text);
 }
 
 .submit-btns {
@@ -310,30 +400,33 @@ textarea {
   align-items: center;
   justify-content: space-evenly;
   width: 100%;
-  margin: 10px;
+  margin: 30px;
 }
 .submit-btns > button {
   border: none;
-  border-radius: 5px;
-  background-color: var(--charcoal);
-  color: white;
+  border-radius: 8px;
+  background-color: var(--charcoal-soft);
+  color: var(--text);
   font-size: 20px;
-  transition: .5s ease;
+  transition: background-color .2s ease, color .2s ease, transform .2s ease;
   cursor: pointer;
   font-weight: bolder;
   width: 200px;
   height: 50px;
   text-align: center;
-  box-shadow: 0px 0px 2.5px 0px goldenrod;
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.45);
   font-weight: bold;
 }
 .submit-btns > button:hover {
-  background-color: goldenrod;
+  background-color: var(--gold);
   color: var(--charcoal);
+  transform: translateY(-1px);
 }
 
 .name-plate{
-  margin-left:10%;
+  margin-left: 0;
+  text-align: center;
+  width: 100%;
 }
 
 .edit-icon{
@@ -342,7 +435,7 @@ textarea {
   font-size: 1.4rem;
 }
 .edit-icon:hover{
-  color: goldenrod;
+  color: var(--gold);
 }
 
 .edit-box{
@@ -356,4 +449,41 @@ textarea {
   display: flex;
   width: 100%;
   justify-content: space-between;
+}
+
+.profile-page {
+  align-items: flex-start;
+  justify-content: flex-start;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.profile-card {
+  width: 100%;
+  border-radius: 12px;
+  padding: 20px;
+  background: linear-gradient(155deg, #163761 0%, #0b1f3b 100%);
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.35), 0 10px 30px rgba(0, 0, 0, 0.35);
+}
+
+.profile-sections {
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 16px;
+}
+
+.profile-category {
+  border-radius: 12px;
+  padding: 16px;
+  background: linear-gradient(155deg, #163761 0%, #0b1f3b 100%);
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.28), 0 10px 22px rgba(0, 0, 0, 0.35);
+}
+
+.profile-card-item {
+  margin-top: 10px;
+  padding: 12px;
+  border-radius: 8px;
+  background-color: #102b4f;
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.2);
 }
